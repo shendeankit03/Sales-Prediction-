@@ -66,16 +66,6 @@ big_mart_data.isnull().sum()
 
 """
 
-#mode_of_outlet_size = big_mart_data.pivot_table(values='Outlet_Size', columns='Outlet_Type', aggfunc=lambda x: x.mode()[0])
-
-#print(mode_of_outlet_size)
-
-#missing_values = big_mart_data['Outlet_Size'].isnull()
-
-#print(missing_values)
-
-#big_mart_data.loc[missing_values, 'Outlet_Size'] = big_mart_data.loc[missing_values, 'Outlet_Type'].apply(lambda x: mode_of_outlet_size)
-
 big_mart_data["Outlet_Size"] = big_mart_data["Outlet_Size"].fillna(big_mart_data["Outlet_Size"].mode()[0])
 
 # checking for missing values
@@ -148,20 +138,6 @@ big_mart_data['Item_Fat_Content'].value_counts()
 
 encoder = LabelEncoder()
 
-# big_mart_data['Item Identifier'] = encoder.fit_transform(big_mart_data['Item_Identifier'])
-
-# big_mart_data['Item_Fat_Content'] = encoder.fit_transform (big_mart_data['Item_Fat_Content'])
-
-# # big_mart_data['Item Type'] = encoder.fit_transform(big_mart_data['Item_Type'])
-
-# # big_mart_data['Outlet_Identifier'] = encoder.fit_transform(big_mart_data['Outlet_Identifier'])
-
-# big_mart_data['Outlet_Size'] = encoder.fit_transform(big_mart_data['Outlet_Size'])
-
-# big_mart_data['Outlet_Location_Type'] = encoder.fit_transform(big_mart_data['Outlet_Location_Type'])
-
-# big_mart_data['Outlet_Type'] = encoder.fit_transform(big_mart_data['Outlet_Type'])
-
 big_mart_data['Item_Fat_Content'] = encoder.fit_transform(big_mart_data['Item_Fat_Content'])
 fat_content_classes = list(encoder.classes_)  # Save the classes for later use
 
@@ -199,30 +175,6 @@ XGBoost Regressor
 """
 
 regressor = XGBRegressor()
-
-# from sklearn.preprocessing import LabelEncoder
-
-# # Instantiate the LabelEncoder
-# le = LabelEncoder()
-
-# # List of columns to encode
-# columns_to_encode = ['Item_Identifier', 'Item_Type', 'Outlet_Size']
-
-# # Apply LabelEncoder to each column individually
-# for column in columns_to_encode:
-#     X_train[column] = le.fit_transform(X_train[column].astype(str))
-#     X_test[column] = le.fit_transform(X_test[column].astype(str))
-
-# # Alternatively, if you want to avoid modifying the original X_train DataFrame,
-# # you can create a copy and apply the transformations on it.
-# X_train_encoded = X_train.copy()
-# X_test_encoded = X_test.copy()
-# for column in columns_to_encode:
-#     X_train_encoded[column] = le.fit_transform(X_train_encoded[column].astype(str))
-#     X_test_encoded[column] = le.fit_transform(X_test_encoded[column].astype(str))
-
-# X_train = pd.get_dummies(X_train, columns=['Item_Type', 'Outlet_Size'])
-# X_test = pd.get_dummies(X_test, columns=['Item_Identifier', 'Item_Type', 'Outlet_Size'])
 
 regressor.fit(X_train, Y_train)
 # regressor.fit(X_test, Y_test)
